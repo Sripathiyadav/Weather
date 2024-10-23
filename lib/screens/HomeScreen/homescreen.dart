@@ -3,6 +3,7 @@ import 'package:weatherr/global/api.dart';
 import 'package:weatherr/global/weathermodel.dart';
 
 class Homescreen extends StatefulWidget {
+  const Homescreen({super.key});
   @override
   State<Homescreen> createState() => _HomescreenState();
 }
@@ -20,7 +21,7 @@ class _HomescreenState extends State<Homescreen> {
             children: [
               _buildsearchwidget(),
               if (inProgress)
-                CircularProgressIndicator()
+                const CircularProgressIndicator()
               else
                 _buildWeatherWidget(),
             ],
@@ -32,7 +33,7 @@ class _HomescreenState extends State<Homescreen> {
 
   Widget _buildWeatherWidget() {
     if (response == null) {
-      return Text("Search any Location for weather details");
+      return const Text("Search any Location for weather details");
     } else {
       return Column(
         //crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +42,7 @@ class _HomescreenState extends State<Homescreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
-                child: Container(
+                child: SizedBox(
                   height: 200,
                   child: Image.network(
                     "https:${response?.current?.condition?.icon}"
@@ -51,34 +52,34 @@ class _HomescreenState extends State<Homescreen> {
                 ),
               ),
               Text(
-                (response?.current?.tempC.toString() ?? "") + "°C",
-                style: TextStyle(fontSize: 80, color: Colors.black),
+                "${response?.current?.tempC.toString() ?? ""}°C",
+                style: const TextStyle(fontSize: 80, color: Colors.black),
               ),
               Text(
                 (response?.current?.condition?.text.toString() ?? ""),
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: const TextStyle(fontSize: 20, color: Colors.black),
               )
             ],
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Icon(
+              const Icon(
                 Icons.location_on_sharp,
                 color: Colors.black,
                 size: 40,
               ),
               Text(
                 response?.location?.name ?? "",
-                style: TextStyle(fontSize: 40, color: Colors.black),
+                style: const TextStyle(fontSize: 40, color: Colors.black),
               ),
               Text(
                 response?.location?.country ?? "",
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: const TextStyle(fontSize: 20, color: Colors.black),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           //  SelectableText(response?.toJson().toString() ?? ""),
@@ -91,7 +92,7 @@ class _HomescreenState extends State<Homescreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SearchBar(
-        leading: Icon(
+        leading: const Icon(
           Icons.search_outlined,
         ),
         hintText: "Search Location here",
@@ -108,7 +109,6 @@ class _HomescreenState extends State<Homescreen> {
     });
     try {
       response = await WeatherApi().getCurrentWeather(location);
-    } catch (e) {
     } finally {
       inProgress = false;
     }
