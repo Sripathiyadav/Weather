@@ -16,16 +16,14 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          child: Column(
-            children: [
-              _buildsearchwidget(),
-              if (inProgress)
-                const CircularProgressIndicator()
-              else
-                _buildWeatherWidget(),
-            ],
-          ),
+        body: Column(
+          children: [
+            _buildsearchwidget(),
+            if (inProgress)
+              const CircularProgressIndicator()
+            else
+              _buildWeatherWidget(),
+          ],
         ),
       ),
     );
@@ -36,7 +34,6 @@ class _HomescreenState extends State<Homescreen> {
       return const Text("Search any Location for weather details");
     } else {
       return Column(
-        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,7 +55,7 @@ class _HomescreenState extends State<Homescreen> {
               Text(
                 (response?.current?.condition?.text.toString() ?? ""),
                 style: const TextStyle(fontSize: 20, color: Colors.black),
-              )
+              ),
             ],
           ),
           Row(
@@ -82,7 +79,6 @@ class _HomescreenState extends State<Homescreen> {
           const SizedBox(
             height: 10,
           ),
-          //  SelectableText(response?.toJson().toString() ?? ""),
         ],
       );
     }
@@ -109,8 +105,13 @@ class _HomescreenState extends State<Homescreen> {
     });
     try {
       response = await WeatherApi().getCurrentWeather(location);
+    } catch (e) {
+      // Handle error if needed
+      response = null;
     } finally {
-      inProgress = false;
+      setState(() {
+        inProgress = false;
+      });
     }
   }
 }
