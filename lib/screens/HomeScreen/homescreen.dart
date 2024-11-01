@@ -16,14 +16,16 @@ class _HomescreenState extends State<Homescreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            _buildsearchwidget(),
-            if (inProgress)
-              const CircularProgressIndicator()
-            else
-              _buildWeatherWidget(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildsearchwidget(),
+              if (inProgress)
+                const CircularProgressIndicator()
+              else
+                _buildWeatherWidget(),
+            ],
+          ),
         ),
       ),
     );
